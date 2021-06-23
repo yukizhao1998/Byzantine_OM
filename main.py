@@ -8,9 +8,8 @@ from Lieutenant import Lieutenant
 
 
 if __name__ == '__main__':
-    for i in range(100):
+    for i in range(20):
         general_num = random.randint(2, 12)
-        general_num = 12
         traitor_num = random.randint(0, int((general_num - 1) / 3))
         traitor_list = random.sample(range(general_num), traitor_num)
         general_thread_list = []
@@ -35,6 +34,7 @@ if __name__ == '__main__':
         correct_agreed_value = -1
         agreed_value_list = []
         msg_cnt = 0
+
         while True:
             if queue_list[general_num].empty():
                 break
@@ -46,9 +46,12 @@ if __name__ == '__main__':
                 agreed_value_list.append(agreed_value)
                 if sender_id == 0:
                     correct_agreed_value = agreed_value
+            elif sender_id == 0:
+                traitor_commander_send_values = agreed_value
         if correct_agreed_value == -1:
             correct_agreed_value = agreed_value_list[0]
             print("Commander is Traitor, agreed value =", correct_agreed_value)
+            print("Commander send values: ", traitor_commander_send_values)
         else:
             print("Commander is honest, agreed value =", correct_agreed_value)
         if msg_cnt != general_num:

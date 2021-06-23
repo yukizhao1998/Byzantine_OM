@@ -66,12 +66,12 @@ class Lieutenant(threading.Thread):
                 root["agreed_value"] = vote
                 return vote
             else:
-                root["agreed_value"] = None
+                root["agreed_value"] = 0
                 return None
 
     def get_voting_process(self, root):
         vote_res = dict()
-        vote_res[root["agreed_value"]] = []
+        vote_res[root["agreed_value"]] = [root["value"]]
         if root["isleaf"]:
             return root["agreed_value"]
         else:
@@ -107,6 +107,7 @@ class Lieutenant(threading.Thread):
         agreed_value = self.get_vote(self.msg_tree[0], None)
         voting_process = self.get_voting_process(self.msg_tree[0])
         print("Lieutenant " + str(self.id) + "'s voting process:" + json.dumps(voting_process) + "\n", end = '')
+        # print("Lieutenant " + str(self.id) + "'s message tree:" + json.dumps(self.msg_tree) + "\n", end='')
         if agreed_value:
             self.msg_tools.send_msg(self.general_num, agreed_value)
         else:

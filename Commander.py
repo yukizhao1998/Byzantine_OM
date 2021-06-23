@@ -15,12 +15,15 @@ class Commander(threading.Thread):
         self.command_number = 0
 
     def run(self):
+        send_list = []
         if self.role == 1:
             for general_id in range(1, self.general_num):
                 randi = random.randint(0, 5)
+                send_list.append(randi)
                 if randi == 5:
                     continue
                 self.msg_tools.send_msg(general_id, {"path": [0], "value": randi})
+            self.command_number = send_list
         else:
             self.command_number = random.randint(0, 5)
             for general_id in range(1, self.general_num):
